@@ -1,0 +1,76 @@
+  <!DOCTYPE html> 
+  <html> 
+  <head> 
+    <title></title> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <link rel="stylesheet" href="js/jquery.mobile-1.4.5.css" >
+    <script src="js/jqueryForMobile.js"></script>
+    <script src="js/jquery.mobile-1.4.5.js"></script>
+    
+   
+  </head> 
+  <body> 
+  <div data-role="page">
+  
+    <div data-role="header">
+      <h1>Session 8 - Livecode 2 </h1>
+	 
+    </div><!-- /header -->
+  
+    <div data-role="content">	
+  
+      <h3>Full Stack Trace - Session8 Data-  simple link</h3>
+         <a href= "http://localhost:3000/getData">Get Session8 Data</a> 
+		 
+		 
+<br />		 
+ <button id="insertData">Insert Dummy data from the apiServer</button>            
+
+    </div><!-- /content -->
+  
+    <div data-role="footer">
+      <h4>Page Footer</h4>
+    </div><!-- /footer -->
+  </div><!-- /page -->
+  
+  
+  
+  <div data-role="page" id="p2" >
+  
+    <div data-role="header">
+      <h1>Page Title</h1>
+    </div><!-- /header -->
+  
+    <div data-role="content">	
+  
+      <h2>Page 2</h2>
+           
+    </div><!-- /content -->
+  
+    <div data-role="footer">
+      <h4>Page Footer</h4>
+    </div><!-- /footer -->
+  </div><!-- /page -->
+  <script>
+	$('#insertData').click( () => {
+	$.ajax({
+    method: "POST",
+	dataType : "json",
+	url: "http://localhost:3000/postData",
+	'contentType': 'application/json',
+ 	data:JSON.stringify ([{"name":"Fred", "age": "90"}, {"name":"Seth", "age": "22"}])
+    
+	}).done(function( data ,tmpText,xhrObj) {
+    alert( "Success: " + "The message is : " + data.msg +" The status text is : " + tmpText +
+	"The status is: " + xhrObj.status );
+    }).error (function( xhr ) {
+      alert( "Error: " + JSON.stringify(xhr) );
+    }).complete(function( xhr ) {
+      alert( "Complete: " + xhr );
+    });// end ajax
+	  
+	});
+	</script>
+  
+  </body>
+  </html>
