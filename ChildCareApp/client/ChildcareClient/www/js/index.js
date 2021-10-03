@@ -1,16 +1,8 @@
-document.addEventListener("deviceready", onDeviceReady, false);
-
-function onDeviceReady() {
-  // Cordova is now initialized. Have fun!
-
-  console.log("Running cordova-" + cordova.platformId + "@" + cordova.version);
-  document.getElementById("deviceready").classList.add("ready");
-}
-
 //This method created the button from the approriate children
-async function createButton(textBtn) {
-  $("#btnContainer").append("<button class='ui-btn' id='scanBtn'>" + textBtn + "</button>");
+async function createButton(textBtn, childid) {
+  $("#btnContainer").append("<button class='ui-btn' data-index-number=" + childid + " id='childBtn'>" + textBtn + "</button>" );
 }
+
 
 function fetchChildrenDetails() {
   fetch("http://localhost:3000/children/saajidh.nizam@cqumail.com")
@@ -19,35 +11,42 @@ function fetchChildrenDetails() {
       if (data.length != 0) {
         for (var childernNo = 0; childernNo < data.length; childernNo++) {
           var childName = data[childernNo].Name;
-          createButton(childName);
+          var childid = data[childernNo]._id;
+          createButton(childName, childid);
         }
+      } else {
+        $("#btnContainer").append("<p>No children assign to you room</p>");
       }
     });
 }
 
-$(document).on("pagecreate", "#home", function (event) {
-  $("#displayLocalDataBtn").on("click", function (e) {
-    $("body").pagecontainer("change", "#localdatapage", {
-      transition: "slide",
+
+function fetchChildrenDetailsById(ChildId) {
+  var childByIdURL = `http://localhost:3000/children/id/${ChildId}`;
+  fetch(childByIdURL)
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.length != 0) {
+          var childName = data[childernNo].Name;
+          var childid = data[childernNo]._id;
+          createButton(childName, childid);
+      } else {
+        $("#btnContainer").append("<p>No children assign to you room</p>");
+      }
     });
-    retrieveLocalData();
-  });
+}
 
-  $("#displayCloudBtn").on("click", function (e) {
-    $("body").pagecontainer("change", "#dataCloud", { transition: "slide" });
-    fetchFromCloud();
-  });
 
-  $("#dropbtn").on("click", function (e) {
-    document.getElementById("dropdownMenu").classList.toggle("show");
-  });
-
-  $("#uploadCloudBtn").on("click", function (e) {
-    $("body").pagecontainer("change", "#uploadCloud", { transition: "slide" });
-    postAlbumData();
-  });
-});
 
 $(document).ready(function () {
   fetchChildrenDetails();
+  $('#btnContainer').on('click', '#childBtn', function()
+    {
+      $("body").pagecontainer("change", "#daily-reflections-page", {
+        transition: "slide",
+      });
+      
+      var valueText = $(this).html();
+      var childId = $(this).attr("data-index-number");
+    });
 });

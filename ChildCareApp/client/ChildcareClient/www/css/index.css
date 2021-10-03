@@ -42,6 +42,22 @@ button{
 
 }
 
+.center-form{
+    margin: auto;
+    width: 80%;
+    padding: 10px;
+}
+
+.lable-text{
+    text-align: right;
+    font-weight: bold;
+    margin: 0 auto;
+}
+
+.cell-text{
+   position: relative;
+}
+
 .header-heading{
     font-size: large !important;
     font-weight: bold !important;

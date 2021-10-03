@@ -1,91 +1,200 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
 
-        <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+<head>
+    <meta charset="utf-8">
+
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
         -->
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
-        <meta name="color-scheme" content="light dark">
-        <link rel="stylesheet" href="css/jquery.mobile-1.4.5.css">
-        <link rel="stylesheet" href="css/index.css">
-        <script src="js/jqueryForMobile.js"></script>
-        <script src="js/jquery.mobile-1.4.5.js"></script>
-        
-        <title>Home</title>
-    </head>
-    <body>
-          <!-- /page --------------------------------------------------------->
-  <div data-role="page" id="home">
-    <div data-role="header">
-      <h1 class="header-heading">Childcare - Educator</h1>
-      <div>
-        <div class="ui-btn-right">
-           <p class="username-lable">Admin</p>  
-           <p class="user-lable">Admin</p>  
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="js/jqueryForMobile.js"></script>
+    <script src="js/jquery.mobile-1.4.5.js"></script>
+
+    <title>Home</title>
+</head>
+
+<body>
+    <!-- /page --------------------------------------------------------->
+    <div data-role="page" id="home">
+        <div data-role="header">
+            <h1 class="header-heading">Childcare - Educator</h1>
+            <div>
+                <div class="ui-btn-right">
+                    <p class="username-lable">Admin</p>
+                    <p class="user-lable">Admin</p>
+                </div>
+            </div>
+        </div><!-- /header -->
+        <div class="btnContainer" id="btnContainer">
+
         </div>
-      </div>
-    </div><!-- /header -->
-    <div class="btnContainer" id="btnContainer">
+    </div><!-- /content -->
+
+    <div data-role="footer">
+        <h4>Page Footer</h4>
+    </div><!-- /footer -->
     </div>
-  </div><!-- /content -->
+    <!-- /page --------------------------------------------------------->
 
-  <div data-role="footer">
-    <h4>Page Footer</h4>
-  </div><!-- /footer -->
-  </div>
-  <!-- /page --------------------------------------------------------->
+    <div data-role="page" id="daily-reflections-page">
 
-  <div data-role="page" id="localdatapage">
+        <div data-role="header" data-add-back-btn="true">
+            <h1 class="header-heading">Daily Reflections</h1>
+        </div><!-- /header -->
 
-    <div data-role="header" data-add-back-btn="true">
-      <h1>LOCAL DATA</h1>
-    </div><!-- /header -->
+        <div data-role="content">
+            <div class="center-form">
+                <form class="form-container">
+                    <div class="ui-grid-b">
+                            <div class="ui-block-c">
+                            <div class="ui-bar ui-bar-c lable-text">Child name</div>
+                        </div>
+                            <div class="ui-block-c">
+                            <div class="ui-bar ui-bar-c">
+                                <p class="reflection-name"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-grid-b">
+                            <div class="ui-block-c">
+                            <div class="ui-bar ui-bar-c lable-text">Room</div>
+                        </div>
+                            <div class="ui-block-c">
+                            <div class="ui-bar ui-bar-c">Block B</div>
+                        </div>
+                    </div>
+                    <div class="ui-grid-b">
+                            <div class="ui-block-c cell-text">
+                            <div class="ui-bar ui-bar-c lable-text">Check-in</div>
+                        </div>
+                            <div class="ui-block-c">
+                            <div class="ui-bar ui-bar-c"><select name="slider-flip-m" id="slider-flip-m"
+                                    data-role="slider" data-mini="true">
+                                        <option value="off">No</option>
+                                        <option value="on" selected="">Yes</option>
+                                </select></div>
+                        </div>
+                    </div>
+                    <div class="ui-grid-b">
+                            <div class="ui-block-c">
+                            <div class="ui-bar ui-bar-c lable-text">Eat/Sleep</div>
+                        </div>
+                            <div class="ui-block-c">
+                            <div class="ui-bar ui-bar-c">
+                                Breakfast : <select name="slider-flip-m" id="slider-flip-m" data-role="slider"
+                                    data-mini="true">
+                                        <option value="off">No</option>
+                                        <option value="on" selected="">Yes</option>
+                                </select>
+                                Morning Tea : <select name="slider-flip-m" id="slider-flip-m" data-role="slider"
+                                    data-mini="true">
+                                        <option value="off">No</option>
+                                        <option value="on" selected="">Yes</option>
+                                </select>
+                                Lunch : <select name="slider-flip-m" id="slider-flip-m" data-role="slider"
+                                    data-mini="true">
+                                        <option value="off">No</option>
+                                        <option value="on" selected="">Yes</option>
+                                </select>
+                                Snacks: <select name="slider-flip-m" id="slider-flip-m" data-role="slider"
+                                    data-mini="true">
+                                        <option value="off">No</option>
+                                        <option value="on" selected="">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-grid-b">
+                            <div class="ui-block-c">
+                            <div class="ui-bar ui-bar-c lable-text">Learning Reflections</div>
+                        </div>
+                            <div class="ui-block-c">
+                            <div class="ui-bar ui-bar-c"><textarea cols="40" rows="8" name="textarea"
+                                    id="textarea"></textarea></div>
+                        </div>
+                    </div>
+                    <div class="ui-grid-b">
+                            <div class="ui-block-c">
+                            <div class="ui-bar ui-bar-c lable-text">Pictures</div>
+                        </div>
+                            <div class="ui-block-c">
+                            <div class="ui-bar ui-bar-c">
+                                <button>Take Pictures</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-grid-b">
+                            <div class="ui-block-c">
+                            <div class="ui-bar ui-bar-c lable-text">Check-out</div>
+                        </div>
+                            <div class="ui-block-c">
+                            <div class="ui-bar ui-bar-c"><select name="slider-flip-m" id="slider-flip-m"
+                                    data-role="slider" data-mini="true">
+                                        <option value="off">No</option>
+                                        <option value="on" selected="">Yes</option>
+                                </select></div>
+                        </div>
+                    </div>
+                    <div class="ui-grid-b">
+                            <div class="ui-block-c">
+                            <div class="ui-bar ui-bar-c lable-text">
 
-    <div data-role="content">
-      <table id="album-tbl" class="table">
-      </table>
+                            </div>
+                        </div>
+                            <div class="ui-block-c">
+                            <div class="ui-bar ui-bar-c">
+                                <button>Save</button>
+                                <button>Send</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 
-  </div><!-- /content -->
+    </div><!-- /content -->
 
-  <div data-role="footer">
-    <h4>Page Footer</h4>
-  </div><!-- /footer -->
-  </div><!-- /page -->
-  <!-- /page --------------------------------------------------------->
+    <div data-role="footer">
+        <h4>Page Footer</h4>
+    </div><!-- /footer -->
+    </div><!-- /page -->
+    <!-- /page --------------------------------------------------------->
 
-  <div data-role="page" id="dataCloud">
+    <div data-role="page" id="dataCloud">
 
-    <div data-role="header" data-add-back-btn="true">
-      <h1>CLOUD DATA</h1>
-    </div><!-- /header -->
-    <div data-role="content">
-      <table id="album-tbl-cloud" class="table">
-        <thead id='album-tbl-thead'>
-          <th>Cover</th>
-          <th>Id</th>
-          <th>Artist</th>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Review</th>
-        </thead>
-        <tbody id='album-tbl-body-cloud'>
-          <!---->
-        </tbody>
-      </table>
+        <div data-role="header" data-add-back-btn="true">
+            <h1>CLOUD DATA</h1>
+        </div><!-- /header -->
+        <div data-role="content">
+            <table id="album-tbl-cloud" class="table">
+                <thead id='album-tbl-thead'>
+                    <th>Cover</th>
+                    <th>Id</th>
+                    <th>Artist</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Review</th>
+                </thead>
+                <tbody id='album-tbl-body-cloud'>
+                    <!---->
+                </tbody>
+            </table>
+        </div>
+    </div><!-- /content -->
+
+    <div data-role="footer">
+        <h4>Group Brisbane</h4>
+    </div><!-- /footer -->
     </div>
-  </div><!-- /content -->
+    <!-- /page --------------------------------------------------------->
+    <script src="cordova.js"></script>
+    <script src="js/index.js"></script>
+</body>
 
-  <div data-role="footer">
-    <h4>Saajidh Nizam</h4>
-  </div><!-- /footer -->
-  </div>
-  <!-- /page --------------------------------------------------------->
-        <script src="cordova.js"></script>
-        <script src="js/index.js"></script>
-    </body>
 </html>

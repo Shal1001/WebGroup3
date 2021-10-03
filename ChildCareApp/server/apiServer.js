@@ -2,13 +2,9 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 const port = 3000
-app.use(express.json())    // <==== parse request body as JSON ( Inbuilt to Express )
+app.use(express.json())    
 app.use(cors());
 
-//During the develoment I had securtiy issues that caused issues in accessing endpoints
-// helmet allowed me to overcome these issues
-const helmet = require("helmet");
-app.use(helmet());
 
 // the following also used to rectify some security error I had during the development.
 /*Referance
@@ -30,13 +26,14 @@ app.use(helmet());
   });
 
 
-const MongoClient = require('mongodb').MongoClient;
+const {MongoClient, ObjectId} = require('mongodb');
+//let ObjectId = MongoClient.ObjectId;
+
 const uri = "mongodb+srv://admin:BvJSJXzrrkzcnAwX@childcarecluster.mj85c.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 // Global for general use
 let currCollection;
 let collectionChildren;
-
 
 
 async function retriveChildren(eduFilter) {
@@ -52,49 +49,51 @@ async function retriveChildren(eduFilter) {
 		})
 		.toArray();
 		collectionChildren = childCollectionCurser;
+		client.close();
+	} catch (e) {
+	  console.error("Error detected:" + e);
+	}
+  }
+
+  var childObj;
+  async function retriveChildrenId(childFilter) {
+	  console.log(childFilter);
+	try {
+	  // create an instance of MongoClient
+	  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+	  await client.connect(); // client.connect() returens a promise so await hold the operations from further exicuting
+	  const childCollectionCurser = await client
+		.db("ChildCareDatabase")
+		.collection("Child")
+		.find({
+			"_id": ObjectId(childFilter)	
+		}).toArray();
+		childObj = childCollectionCurser;
+		console.log(childCollectionCurser);
+		client.close();
 	} catch (e) {
 	  console.error("Error detected:" + e);
 	}
   }
 
 
+
+
 app.get('/children/:educator', (req, res) => {
 	var eduFilter = req.params.educator
 	retriveChildren(eduFilter);
 	res.send(collectionChildren)
+});
+
+app.get('/children/id/:id', (req, res) => {
+	var childIdFilter = req.params.id;
+	//console.log(childIdFilter);
+	var childdetails = retriveChildrenId(childIdFilter);
+	console.log(childdetails);
+	res.send(childObj)
 })
 
 
-app.post('/postData', (req, res) => {
-    	console.log("Data: " + JSON.stringify(req.body));
-	
-	    currCollection.insertMany( req.body , function(err, result) {
-	       if (err) {
-				console.log(err);
-			}else {
-			    console.log({"msg" : result.insertedCount + " Records Inserted Count:"}); 
-				res.send({"msg" : result.insertedCount + " Records Inserted:"});
-		 	}// end
-		
-	});
-	
-  })
-  
-
-app.get('/getData', (req, res) => {
-
-	currCollection.find().toArray( function(err,docs) {
-		if(err) {
-		  console.log("Some error.. " + err);
-		} else {
-		   console.log( JSON.stringify(docs) + " have been retrieved.");
-		   res.send("<h4>" + JSON.stringify(docs) + " : " +  err + "</h4>");
-		}
-
-	});
-
-});
-
-app.listen(port, () => {
+app.listen(port, '192.168.0.100', () => {
   console.log(`Childcare app listening at http://localhost:${port}`)
 })
