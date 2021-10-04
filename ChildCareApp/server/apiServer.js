@@ -11,8 +11,8 @@ app.use(cors());
  *https://stackoverflow.com/questions/32500073/request-header-field-access-control-allow-headers-is-not-allowed-by-itself-in-pr
  */
  app.use(function (req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", `http://localhost:3000`);
-    res.setHeader("Access-Control-Allow-Origin", `http://localhost:8000`);
+    res.setHeader("Access-Control-Allow-Origin", `http://192.168.0.100:3000`);
+    res.setHeader("Access-Control-Allow-Origin", `http://192.168.0.100:8001`);
     res.setHeader(
       "Access-Control-Allow-Methods",
       "GET, POST, OPTIONS, PUT, PATCH, DELETE"
@@ -49,6 +49,7 @@ async function retriveChildren(eduFilter) {
 		})
 		.toArray();
 		collectionChildren = childCollectionCurser;
+		console.log(childCollectionCurser);
 		client.close();
 	} catch (e) {
 	  console.error("Error detected:" + e);
@@ -75,8 +76,6 @@ async function retriveChildren(eduFilter) {
 	  console.error("Error detected:" + e);
 	}
   }
-
-
 
 
 app.get('/children/:educator', (req, res) => {
