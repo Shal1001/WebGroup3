@@ -19,5 +19,16 @@
 <img src="up-server.PNG" alt="">
 <h1>Upload Images</h1>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ymO_r1hcIXk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<h1>Android build error</h1>
+<p>Unable to start the daemon process. This problem might be caused by incorrect configuration of the daemon. For example, an unrecognized jvm option is used. Please refer to the User Manual chapter on the daemon at https://docs.gradle.org/6.9.1/userguide/gradle_daemon.html Process command line: C:\Program Files (x86)\Java\jdk1.8.0_172\bin\java.exe -Xmx2048m -Dfile.encoding=windows-1252 -Duser.country=US -Duser.language=en -Duser.variant -cp C:\AndroidSDK\gradle-6.9.1\lib\gradle-launcher-6.9.1.jar org.gradle.launcher.daemon.bootstrap.GradleDaemon 6.9.1 Please read the following process output to find out more: ----------------------- Error occurred during initialization of VM Could not reserve enough space for 2097152KB object heap</p>
+<p style='color: red; font-weight: bold;'>org.gradle.jvmargs=-Xmx1024m</p>
+<h1>How to fix 'net::ERR_CLEARTEXT_NOT_PERMITTED'</h1>
+<img src="andreoid error.PNG" alt="">
+https://stackoverflow.com/questions/55592392/how-to-fix-neterr-cleartext-not-permitted-in-flutter
+please refer  the commented line <div class="d-flex flex-row-reverse">
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data:">
+    and the follow the cors propject shoen by Phillp-->
+</div>
+
 </body>
 </html>

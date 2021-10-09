@@ -3,9 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-
-    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-        -->
+    <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data:">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
@@ -124,7 +122,8 @@
                         </div>
                             <div class="ui-block-c">
                             <div class="ui-bar ui-bar-c">
-                                <button>Take Pictures</button>
+                                <div id="child-images"></div>
+                                <button id="camera-take-images">Take Pictures</button>
                             </div>
                         </div>
                     </div>

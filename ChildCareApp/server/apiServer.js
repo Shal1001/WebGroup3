@@ -5,25 +5,7 @@ const port = 3000
 app.use(express.json())    
 app.use(cors());
 
-
-// the following also used to rectify some security error I had during the development.
-/*Referance
- *https://stackoverflow.com/questions/32500073/request-header-field-access-control-allow-headers-is-not-allowed-by-itself-in-pr
- */
- app.use(function (req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", `http://192.168.0.100:3000`);
-    res.setHeader("Access-Control-Allow-Origin", `http://192.168.0.100:8001`);
-    res.setHeader(
-      "Access-Control-Allow-Methods",
-      "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-    );
-    res.setHeader(
-      "Access-Control-Allow-Headers",
-      "X-Requested-With,content-type"
-    );
-    res.setHeader("Access-Control-Allow-Credentials", true);
-    next();
-  });
+const baseURL = '192.168.0.100';
 
 
 const {MongoClient, ObjectId} = require('mongodb');
@@ -78,13 +60,13 @@ async function retriveChildren(eduFilter) {
   }
 
 
-app.get('/children/:educator', (req, res) => {
+app.get('/children/:educator', cors(), (req, res) => {
 	var eduFilter = req.params.educator
 	retriveChildren(eduFilter);
 	res.send(collectionChildren)
 });
 
-app.get('/children/id/:id', (req, res) => {
+app.get('/children/id/:id', cors(), (req, res) => {
 	var childIdFilter = req.params.id;
 	//console.log(childIdFilter);
 	var childdetails = retriveChildrenId(childIdFilter);
@@ -93,6 +75,6 @@ app.get('/children/id/:id', (req, res) => {
 })
 
 
-app.listen(port, '192.168.0.100', () => {
+app.listen(port, baseURL , () => {
   console.log(`Childcare app listening at http://localhost:${port}`)
 })
