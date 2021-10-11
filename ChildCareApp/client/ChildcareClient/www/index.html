@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data:">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src *; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data:">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
@@ -46,115 +47,147 @@
         </div><!-- /header -->
 
         <div data-role="content">
-            <div class="center-form">
-                <form class="form-container">
-                    <div class="ui-grid-b">
-                            <div class="ui-block-c">
-                            <div class="ui-bar ui-bar-c lable-text">Child name</div>
+            <div class="center-form">                
+                <div class="ui-grid-b ui-responsive">
+                        <div class="ui-block-c">
+                        <div class="ui-bar ui-bar-c lable-text">Child name</div>
+                    </div>
+                        <div class="ui-block-c">
+                        <div class="ui-bar ui-bar-c">
+                            <p class="reflection-name"></p>
                         </div>
-                            <div class="ui-block-c">
-                            <div class="ui-bar ui-bar-c">
-                                <p class="reflection-name"></p>
+                    </div>
+                </div>
+                <div class="ui-grid-b ui-responsive">
+                        <div class="ui-block-c">
+                        <div class="ui-bar ui-bar-c lable-text">Room</div>
+                    </div>
+                        <div class="ui-block-c">
+                        <div class="ui-bar ui-bar-c">
+                            <p class="reflection-room"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-b">
+                        <div class="ui-block-c cell-text">
+                        <div class="ui-bar ui-bar-c lable-text">Check-in</div>
+                    </div>
+                        <div class="ui-block-c">
+                        <div class="ui-bar ui-bar-c"><select name="slider-flip-m" id="slider-flip-m" data-role="slider"
+                                data-mini="true">
+                                    <option value="off">No</option>
+                                    <option value="on" selected="">Yes</option>
+                            </select></div>
+                    </div>
+                </div>
+                <div class="ui-grid-b ui-responsive">
+                        <div class="ui-block-c">
+                        <div class="ui-bar ui-bar-c lable-text">Eat/Sleep</div>
+                    </div>
+                        <div class="ui-block-c">
+                        <div class="ui-bar ui-bar-c">
+                            <div class="ui-grid-b">
+                                <div class="ui-bar ui-bar-c">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                               <td>Breakfast : </td> 
+                                               <td>
+                                                <div class="ui-bar ui-bar-c lable-text"></div>
+                                                <select name="slider-flip-m" id="slider-flip-m" data-role="slider" data-mini="true">
+                                                        <option value="off">No</option>
+                                                        <option value="on" selected="">Yes</option>
+                                                </select>
+                                               </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Morning Tea : </td> 
+                                                <td>
+                                                 <div class="ui-bar ui-bar-c lable-text"></div>
+                                                 <select name="slider-flip-m" id="slider-flip-m" data-role="slider" data-mini="true">
+                                                         <option value="off">No</option>
+                                                         <option value="on" selected="">Yes</option>
+                                                 </select>
+                                                </td>
+                                             </tr>
+                                             <tr>
+                                                <td>Lunch : </td> 
+                                                <td>
+                                                 <div class="ui-bar ui-bar-c lable-text"></div>
+                                                 <select name="slider-flip-m" id="slider-flip-m" data-role="slider" data-mini="true">
+                                                         <option value="off">No</option>
+                                                         <option value="on" selected="">Yes</option>
+                                                 </select>
+                                                </td>
+                                             </tr>
+                                             <tr>
+                                                <td>Snacks:  </td> 
+                                                <td>
+                                                 <div class="ui-bar ui-bar-c lable-text"></div>
+                                                 <select name="slider-flip-m" id="slider-flip-m" data-role="slider" data-mini="true">
+                                                         <option value="off">No</option>
+                                                         <option value="on" selected="">Yes</option>
+                                                 </select>
+                                                </td>
+                                             </tr>
+                                        </tbody>
+                                    </table>   
                             </div>
                         </div>
                     </div>
-                    <div class="ui-grid-b">
-                            <div class="ui-block-c">
-                            <div class="ui-bar ui-bar-c lable-text">Room</div>
-                        </div>
-                            <div class="ui-block-c">
-                            <div class="ui-bar ui-bar-c"><p class="reflection-room"></p></div>
-                        </div>
-                    </div>
-                    <div class="ui-grid-b">
-                            <div class="ui-block-c cell-text">
-                            <div class="ui-bar ui-bar-c lable-text">Check-in</div>
-                        </div>
-                            <div class="ui-block-c">
-                            <div class="ui-bar ui-bar-c"><select name="slider-flip-m" id="slider-flip-m"
-                                    data-role="slider" data-mini="true">
-                                        <option value="off">No</option>
-                                        <option value="on" selected="">Yes</option>
-                                </select></div>
-                        </div>
-                    </div>
-                    <div class="ui-grid-b">
-                            <div class="ui-block-c">
-                            <div class="ui-bar ui-bar-c lable-text">Eat/Sleep</div>
-                        </div>
-                            <div class="ui-block-c">
-                            <div class="ui-bar ui-bar-c">
-                                Breakfast : <select name="slider-flip-m" id="slider-flip-m" data-role="slider"
-                                    data-mini="true">
-                                        <option value="off">No</option>
-                                        <option value="on" selected="">Yes</option>
-                                </select>
-                                Morning Tea : <select name="slider-flip-m" id="slider-flip-m" data-role="slider"
-                                    data-mini="true">
-                                        <option value="off">No</option>
-                                        <option value="on" selected="">Yes</option>
-                                </select>
-                                Lunch : <select name="slider-flip-m" id="slider-flip-m" data-role="slider"
-                                    data-mini="true">
-                                        <option value="off">No</option>
-                                        <option value="on" selected="">Yes</option>
-                                </select>
-                                Snacks: <select name="slider-flip-m" id="slider-flip-m" data-role="slider"
-                                    data-mini="true">
-                                        <option value="off">No</option>
-                                        <option value="on" selected="">Yes</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ui-grid-b">
-                            <div class="ui-block-c">
-                            <div class="ui-bar ui-bar-c lable-text">Learning Reflections</div>
-                        </div>
-                            <div class="ui-block-c">
-                            <div class="ui-bar ui-bar-c"><textarea cols="40" rows="8" name="textarea"
-                                    id="textarea"></textarea></div>
-                        </div>
-                    </div>
-                    <div class="ui-grid-b">
-                            <div class="ui-block-c">
-                            <div class="ui-bar ui-bar-c lable-text">Pictures</div>
-                        </div>
-                            <div class="ui-block-c">
-                            <div class="ui-bar ui-bar-c">
-                                <div id="child-images"></div>
-                                <button id="camera-take-images">Take Pictures</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ui-grid-b">
-                            <div class="ui-block-c">
-                            <div class="ui-bar ui-bar-c lable-text">Check-out</div>
-                        </div>
-                            <div class="ui-block-c">
-                            <div class="ui-bar ui-bar-c"><select name="slider-flip-m" id="slider-flip-m"
-                                    data-role="slider" data-mini="true">
-                                        <option value="off">No</option>
-                                        <option value="on" selected="">Yes</option>
-                                </select></div>
-                        </div>
-                    </div>
-                    <div class="ui-grid-b">
-                            <div class="ui-block-c">
-                            <div class="ui-bar ui-bar-c lable-text">
-
-                            </div>
-                        </div>
-                            <div class="ui-block-c">
-                            <div class="ui-bar ui-bar-c">
-                                <button>Save</button>
-                                <button>Send</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
+            <div class="ui-grid-b ui-responsive">
+                    <div class="ui-block-c">
+                    <div class="ui-bar ui-bar-c lable-text">Learning Reflections</div>
+                </div>
+                    <div class="ui-block-c">
+                    <div class="ui-bar ui-bar-c"><textarea cols="40" rows="8" name="textarea" id="textarea"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-grid-b ui-responsive">
+                    <div class="ui-block-c">
+                    <div class="ui-bar ui-bar-c lable-text">Pictures</div>
+                </div>
+                    <div class="ui-block-c">
+                    <div class="ui-bar ui-bar-c">
+                        <div id="child-images"></div>
+                        <button id="camera-take-images">Take Pictures</button>
+                        <p>Or upload Image</p>
+                        <input type="file" id="img" name="img" accept="image/*">
+                        <button id="btnFile">Upload Pictures</button>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-grid-b">
+                    <div class="ui-block-c">
+                    <div class="ui-bar ui-bar-c lable-text">Check-out</div>
+                </div>
+                    <div class="ui-block-c">
+                    <div class="ui-bar ui-bar-c"><select name="slider-flip-m" id="slider-flip-m" data-role="slider"
+                            data-mini="true">
+                                <option value="off">No</option>
+                                <option value="on" selected="">Yes</option>
+                        </select></div>
+                </div>
+            </div>
+            <div class="ui-grid-b ui-responsive">
+                    <div class="ui-block-c">
+                    <div class="ui-bar ui-bar-c lable-text">
+
+                    </div>
+                </div>
+                    <div class="ui-block-c">
+                    <div class="ui-bar ui-bar-c">
+                        <button>Save</button>
+                        <button>Send</button>
+                    </div>
+                </div>
+            </div>
+            </form>
         </div>
+    </div>
     </div>
 
     </div><!-- /content -->

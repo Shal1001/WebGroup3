@@ -2,10 +2,10 @@
 <widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>ChildCare</name>
     <description>
-        This is a ChildCare app
+        This is a ChildCare appdeveloped as a part of Assigment 3
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="saajidh.niazm@Cqumail.com" href="http://cordova.io">
+        Shaline, Beant and Saajidh Team
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -16,8 +16,11 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <access origin="cdvfile://*" />
     <platform name="android">
         <allow-intent href="market:*" />
+        <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+        <preference name="AndroidExtraFilesystems" value="files,files-external,documents,sdcard,cache,cache-external,assets,root" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
