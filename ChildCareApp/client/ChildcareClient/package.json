@@ -31,5 +31,8 @@
       "browser",
       "android"
     ]
+  },
+  "dependencies": {
+    "image-to-base64": "^2.2.0"
   }
 }

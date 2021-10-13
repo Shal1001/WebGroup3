@@ -46,6 +46,9 @@ function fetchChildrenDetails() {
 
 var valData;
 
+// this function retrive the details of
+// a perticuler child when the educator choose the childe to enter details
+// children details are retrived from the database from the fetchChildrenDetails function
 function fetchChildrenDetailsById(ChildId) {
   var childrenStorageData = localStorage.getItem(
     "childrenofEducatorLocalStorage"
@@ -63,8 +66,12 @@ function fetchChildrenDetailsById(ChildId) {
     if (childid == ChildId) {
       $(".reflection-name").empty();
       $(".reflection-name").append(childName);
+      $(".reflection-name").attr("data-index-number", childid);
       $(".reflection-room").empty();
       $(".reflection-room").append(childRoom);
+      // add the data-index-number attribute that is used in the form through out
+      $("#camera-take-images").attr("data-index-number", childid);
+      $("#child-images").attr("data-index-number", childid);
     }
   }
 }
@@ -72,6 +79,9 @@ function fetchChildrenDetailsById(ChildId) {
 // this method store the details of the children from the database in the localStroge
 function storeChildrenDetails(childrenEndroledforEducator) {
   try {
+    /* create if the loacal storage is not available in the local storage or 
+     * clear the values and repoplate the children details when the user load 
+    the application*/
     if (localStorage) {
       var childrenofEducatorLocalStorage;
       if (!localStorage["childrenofEducatorLocalStorage"])
@@ -80,7 +90,7 @@ function storeChildrenDetails(childrenEndroledforEducator) {
       if (!(childrenofEducatorLocalStorage instanceof Array))
         childrenofEducatorLocalStorage = [];
       childrenofEducatorLocalStorage.push(childrenEndroledforEducator);
-
+      // create the childrenofEducatorLocalStorage that contails the children for the educator
       localStorage.setItem(
         "childrenofEducatorLocalStorage",
         JSON.stringify(childrenofEducatorLocalStorage)
@@ -100,6 +110,7 @@ function storeChildrenDetails(childrenEndroledforEducator) {
 // This Method retrives the Children Details from the localstorage
 function retrieveChildrensFromLocalStore() {
   try {
+    //Here we are retriving the json object stroed in the childrenofEducatorLocalStorage local storge
     var childrenStorageData = localStorage.getItem(
       "childrenofEducatorLocalStorage"
     );
@@ -115,18 +126,31 @@ function retrieveChildrensFromLocalStore() {
   }
 }
 
+// this is the document.ready fuction handeles the button click events
 $(document).ready(function () {
   fetchChildrenDetails();
   $("#btnContainer").on("click", "#childBtn", function () {
     $("body").pagecontainer("change", "#daily-reflections-page", {
       transition: "slide",
     });
-    //var valueText = $(this).html();
+    // read the data values in the data attritute to fetch the each child a auctaor list
+    // this helps to populate the each child details for create each page for eachild each day
     var childId = $(this).attr("data-index-number");
     fetchChildrenDetailsById(childId);
   });
 
-  //This method work with ce
+  //this method used to encode the Base64 image file
+  function encodeBase64(image) {
+    return new Promise(function (resolve) {
+      var reader = new FileReader();
+      reader.onloadend = function () {
+        resolve(reader.result);
+      };
+      reader.readAsDataURL(image);
+    });
+  }
+
+  //This method work with cordova camera plugin
   let app = {
     init: function () {
       document
@@ -134,60 +158,71 @@ $(document).ready(function () {
         .addEventListener("click", app.takephoto);
     },
     takephoto: function () {
+      //These are the options of the camera function when the camera take pictures
       let option = {
         quality: 80,
-        destinationType: Camera.DestinationType.DATA_URL, // 1
+        destinationType: Camera.DestinationType.DATA_URL, // this returens base64 encoded string
         sourceType: Camera.PictureSourceType.CAMERA,
         mediaType: Camera.MediaType.PICTURE, // use the image gallery
         encodingType: Camera.EncodingType.JPEG,
         cameraDirection: Camera.Direction.BACK, //use the back camera
         targetWidth: 1024,
       };
+      // this take the image from the camera
       navigator.camera.getPicture(app.ftw, app.wtf, option);
     },
     // This fuction is exicuted when the camera is successful
     ftw: function (imageURI) {
-      console.log(imageURI);
-
-      var base64Img = imageURI;
-      var image = new Image();
-      image.src = "data:image/jpeg;base64," + base64Img;
-
-      $("#child-images").append(
-        `<img display:none;width:60px;height:60px; src='${image}'></img>`
-      );
-      var childimgURL = `http://${serverIP}:3000/img`;
-
-      var form = new FormData();
-      form.append("image", image);
-
-      //form.append("image", fileInput.files[0], `/${imageURI}`);
-
-      console.log(form);
-      var settings = {
-        url: "http://192.168.0.100:3000/img",
-        method: "POST",
-        timeout: 0,
-        headers: {
-          test: "test",
-          "Content-Type": "application/json",
-        },
-        data: JSON.stringify({
-          fileName: `${new Date().getTime()}.jpg`,
-          fileContent: base64Img,
-        }),
-      };
-
-      $.ajax(settings).done(function (response) {
-        console.log(response);
-      });
-
-      console.log(imageURI);
+      // On successfully captured the image is desplay in the app and send a copy the the server
+      sendImagetoServer(imageURI);
     },
+    // this even fired when the camera failes
     wtf: function (message) {
       alert(message);
     },
   };
+
+  // this fuction sends the image to the server as bas 64 encoded file
+  function sendImagetoServer(imageURI) {
+    var base64Img = imageURI;
+    var image = new Image();
+    image.src = "data:image/jpeg;base64," + base64Img;
+    var childImageId = $("#child-images").attr("data-index-number");
+    var cemeraAttrbuteId = $("#camera-take-images").attr(
+      "data-index-number"
+    );
+    //add the Image preview to the report check the attrubute in the button and 
+    //div tages to match in order to avoid the images loaded in every child's reflection pages  
+    if (childImageId == cemeraAttrbuteId) {
+      var img = document.createElement("img");
+      img.src = "data:image/jpg;base64," + imageURI;
+      document.getElementById("child-images").appendChild(img);
+    }
+
+    //store the Image captured in the server
+    var childimgURL = `http://${serverIP}:3000/img`;
+
+    var form = new FormData();
+    form.append("image", image);
+
+    var settings = {
+      url: childimgURL,
+      method: "POST",
+      timeout: 0,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify({
+        fileName: `${new Date().getTime()}.jpg`,
+        fileContent: base64Img,
+      }),
+    };
+    // the file is storted succfully it returens the link of the image from the server
+    $.ajax(settings).done(function (response) {
+      console.log(response.imageurl);
+      var imageLink = response.imageurl;
+    });
+  }
 
   document.addEventListener("deviceready", app.init);
 });
