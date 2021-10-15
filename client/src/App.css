@@ -1,0 +1,136 @@
+body {
+  margin: 5%;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 17px;
+}
+
+form.waypoint-form {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+}
+form.waypoint-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.waypoint-form-fields {
+  margin-bottom: 20px;
+}
+
+.waypoint-form button {
+  background-color: #7dbad1;
+  border: none;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 2px;
+}
+
+.login-form > div > label {
+  font-weight: bold;
+}
+
+form input:focus {
+  outline: 0;
+}
+
+.loaderDiv {
+  background-color: #aaa;
+  opacity: 0.3;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 220px;
+  height: 220px;
+  text-align: center;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* loader styling */
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: auto;
+  left: 48%;
+  top: 150px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  margin: 8px;
+  border: 6px solid #ff645c;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #ff645c transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.login-form_container,
+.login-register-link {
+  max-width: 322px;
+  margin: 0 auto;
+}
+.login-form_container {
+  box-shadow: 0 8px 24px rgb(0 0 0 / 10%);
+  background-color: white;
+  padding: 1.5rem 3rem;
+  border-radius: 10px;
+}
+.login-form_container input {
+  margin-bottom: 2rem;
+  width: 100%;
+}
+.login-form_container label {
+  width: 100%;
+}
+select {
+  width: 100%;
+}
