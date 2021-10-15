@@ -155,6 +155,17 @@ h1 {
   display: block;
 }
 
+.ui-slider-switch.ui-mini .ui-slider-label {
+  font-size: 18px;
+}
+
+.child-image{
+  max-width:300px;
+  max-height:200px;
+  float:left;
+  margin-bottom: 10px;
+}
+
 @keyframes fade {
   from {
     opacity: 1;

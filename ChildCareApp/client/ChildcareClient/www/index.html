@@ -73,11 +73,12 @@
                         <div class="ui-bar ui-bar-c lable-text">Check-in</div>
                     </div>
                         <div class="ui-block-c">
-                        <div class="ui-bar ui-bar-c"><select name="slider-flip-m" id="slider-flip-m" data-role="slider"
-                                data-mini="true">
-                                    <option value="off">No</option>
-                                    <option value="on" selected="">Yes</option>
-                            </select></div>
+                        <div class="ui-bar ui-bar-c">
+                            <label>
+                                <input type="checkbox" name="checkbox-slider-flip-checkin" id="slider-flip-checkin" class="slider-flip-checkin">Check In
+                            </label>
+                            <p id="check-in-time"></p>
+                        </div>
                     </div>
                 </div>
                 <div class="ui-grid-b ui-responsive">
@@ -94,40 +95,54 @@
                                                <td>Breakfast : </td> 
                                                <td>
                                                 <div class="ui-bar ui-bar-c lable-text"></div>
-                                                <select name="slider-flip-m" id="slider-flip-m" data-role="slider" data-mini="true">
-                                                        <option value="off">No</option>
-                                                        <option value="on" selected="">Yes</option>
-                                                </select>
+                                             <!--   <select name="slider-flip-b-first" id="slider-flip-b-first" data-role="slider" data-mini="true">
+                                                        <option value="off" selected="">No</option>
+                                                        <option value="on" >Yes</option>
+                                                </select>-->
+                                                <label>
+                                                    <input type="checkbox" name="checkbox-slider-flip-b-first" id="slider-flip-b-first" class="slider-flip-b-first">Breakfast
+                                                </label>
+                    
                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Morning Tea : </td> 
                                                 <td>
                                                  <div class="ui-bar ui-bar-c lable-text"></div>
-                                                 <select name="slider-flip-m" id="slider-flip-m" data-role="slider" data-mini="true">
-                                                         <option value="off">No</option>
-                                                         <option value="on" selected="">Yes</option>
-                                                 </select>
+                                                 <label>
+                                                    <input type="checkbox" name="checkbox-slider-flip-m-tea" id="slider-flip-m-tea" class="slider-flip-m-tea">Morning Tea
+                                                </label><!--
+                                                 <select name="slider-flip-m-tea" id="slider-flip-m-tea" data-role="slider" data-mini="true">
+                                                         <option value="off" selected="">No</option>
+                                                         <option value="on">Yes</option>
+                                                 </select>-->
                                                 </td>
                                              </tr>
                                              <tr>
                                                 <td>Lunch : </td> 
                                                 <td>
                                                  <div class="ui-bar ui-bar-c lable-text"></div>
-                                                 <select name="slider-flip-m" id="slider-flip-m" data-role="slider" data-mini="true">
-                                                         <option value="off">No</option>
-                                                         <option value="on" selected="">Yes</option>
-                                                 </select>
+                                                 <label>
+                                                    <input type="checkbox" name="checkbox-slider-flip-lunch " id="slider-flip-lunch" class="slider-flip-lunch">Lunch 
+                                                </label>
+                                                 <!--
+                                                 <select name="slider-flip-lunch" id="slider-flip-lunch" data-role="slider" data-mini="true">
+                                                         <option value="off" selected="">No</option>
+                                                         <option value="on" >Yes</option>
+                                                 </select>-->
                                                 </td>
                                              </tr>
                                              <tr>
                                                 <td>Snacks:  </td> 
                                                 <td>
                                                  <div class="ui-bar ui-bar-c lable-text"></div>
-                                                 <select name="slider-flip-m" id="slider-flip-m" data-role="slider" data-mini="true">
-                                                         <option value="off">No</option>
-                                                         <option value="on" selected="">Yes</option>
-                                                 </select>
+                                                 <label>
+                                                    <input type="checkbox" name="checkbox-slider-flip-snak " id="slider-flip-snak" class="slider-flip-snak">Snacks
+                                                </label>
+                                                <!--<select name="slider-flip-snak" id="slider-flip-snak" data-role="slider" data-mini="true">
+                                                         <option value="off" selected="">No</option>
+                                                         <option value="on" >Yes</option>
+                                                 </select>--> 
                                                 </td>
                                              </tr>
                                         </tbody>
@@ -142,7 +157,7 @@
                     <div class="ui-bar ui-bar-c lable-text">Learning Reflections</div>
                 </div>
                     <div class="ui-block-c">
-                    <div class="ui-bar ui-bar-c"><textarea cols="40" rows="8" name="textarea" id="textarea"></textarea>
+                    <div class="ui-bar ui-bar-c"><textarea cols="40" rows="8" name="textarea" id="textarea_lerning_reflection"></textarea>
                     </div>
                 </div>
             </div>
@@ -162,11 +177,16 @@
                     <div class="ui-bar ui-bar-c lable-text">Check-out</div>
                 </div>
                     <div class="ui-block-c">
-                    <div class="ui-bar ui-bar-c"><select name="slider-flip-m" id="slider-flip-m" data-role="slider"
+                    <div class="ui-bar ui-bar-c">
+                        <!--<select name="slider-flip-checkout" id="slider-flip-checkout" data-role="slider"
                             data-mini="true">
-                                <option value="off">No</option>
-                                <option value="on" selected="">Yes</option>
-                        </select></div>
+                                <option value="off" selected="">No</option>
+                                <option value="on" >Yes</option>
+                        </select>-->
+                        <label>
+                            <input type="checkbox" name="checkbox-slider-flip-checkout" id="slider-flip-checkout" class="slider-flip-checkout">Check Out
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="ui-grid-b ui-responsive">
@@ -177,8 +197,8 @@
                 </div>
                     <div class="ui-block-c">
                     <div class="ui-bar ui-bar-c">
-                        <button>Save</button>
-                        <button>Send</button>
+                        <button id="save-button">Save</button>
+                        <button id="send-button">Send</button>
                     </div>
                 </div>
             </div>

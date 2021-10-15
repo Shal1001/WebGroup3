@@ -47,7 +47,7 @@ async function retriveChildren(eduFilter) {
 			})
 			.toArray();
 		collectionChildren = childCollectionCurser;
-		console.log(`The childre of the a ${eduFilter} retrived successfully`);
+		console.log(`The children of the a ${eduFilter} retrived successfully`);
 		client.close();
 	} catch (e) {
 		console.error("Error detected:" + e);

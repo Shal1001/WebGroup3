@@ -13,6 +13,7 @@ async function createButton(textBtn, childid) {
 
 // This variable hold the username of the eduactor. ****take from login*****
 var educatorUsername = "saajidh.nizam@cqumail.com";
+var childrenReflectionArrayPassed = [];
 // this method fetch the details of the childrens an educator
 function fetchChildrenDetails() {
   var childByEduURL = `http://${serverIP}:3000/children/${educatorUsername}`;
@@ -22,9 +23,7 @@ function fetchChildrenDetails() {
     dataType: "JSON",
     success: function (data) {
       if (data.length != 0) {
-        console.log(data);
         storeChildrenDetails(data);
-
         var childrendDetailsArray = retrieveChildrensFromLocalStore();
 
         for (
@@ -32,6 +31,7 @@ function fetchChildrenDetails() {
           childernNo < childrendDetailsArray.length;
           childernNo++
         ) {
+          var childobj = childrendDetailsArray[childernNo];
           var childName = childrendDetailsArray[childernNo].Name;
           var childid = childrendDetailsArray[childernNo]._id;
 
@@ -60,9 +60,11 @@ function fetchChildrenDetailsById(ChildId) {
     childernNo < childrenStorageDataArray.length;
     childernNo++
   ) {
-    var childName = childrenStorageDataArray[childernNo].Name;
-    var childid = childrenStorageDataArray[childernNo]._id;
-    var childRoom = childrenStorageDataArray[childernNo].Room;
+    var childObj = childrenStorageDataArray[childernNo];
+    prefillReflection(childObj);
+    var childName = childObj.Name;
+    var childid = childObj._id;
+    var childRoom = childObj.Room;
     if (childid == ChildId) {
       $(".reflection-name").empty();
       $(".reflection-name").append(childName);
@@ -72,8 +74,47 @@ function fetchChildrenDetailsById(ChildId) {
       // add the data-index-number attribute that is used in the form through out
       $("#camera-take-images").attr("data-index-number", childid);
       $("#child-images").attr("data-index-number", childid);
+      $("#slider-flip-checkin").attr("data-index-number", childid);
+      $("#slider-flip-b-first").attr("data-index-number", childid);
+      $("#slider-flip-m-tea").attr("data-index-number", childid);
+      $("#slider-flip-lunch").attr("data-index-number", childid);
+      $("#slider-flip-snak").attr("data-index-number", childid);
+      $("#textarea_lerning_reflection").attr("data-index-number", childid);
+      $("#slider-flip-checkout").attr("data-index-number", childid);
+      $("#save-button").attr("data-index-number", childid);
+      $("#send-button").attr("data-index-number", childid);
+      $("#check-in-time").attr("data-index-number", childid);
     }
   }
+}
+
+// This function prefill the json object and add to the localstore
+function prefillReflection(childobj) {
+  var refParentName = childobj.Parent.Name;
+  var refParentemail = childobj.Parent.Username;
+  var refchildId = childobj._id;
+  var refChildName = childobj.Name;
+  var refChildRoom = childobj.Room;
+  var refEducatorName = childobj.Educator.Name;
+  var refEducatorUserName = childobj.Educator.Username;
+  //getJSON
+
+  var childRefObj;
+  var childjson = $.getJSON(
+    "js/dailyReflection.json",
+    function (jsonRefelection) {
+      jsonRefelection.parent.name = refParentName;
+      jsonRefelection.parent.email = refParentemail;
+      jsonRefelection.childId = refchildId;
+      jsonRefelection.childName = refChildName;
+      jsonRefelection.childRoom = refChildRoom;
+      jsonRefelection.educator.name = refEducatorName;
+      jsonRefelection.educator.username = refEducatorUserName;
+      // Reflection Id is generated when the child checked in the childid_timecheckin
+      localStorage.setItem(`${refchildId}`, JSON.stringify(jsonRefelection));
+    }
+  );
+  console.log(childjson);
 }
 
 // this method store the details of the children from the database in the localStroge
@@ -86,7 +127,7 @@ function storeChildrenDetails(childrenEndroledforEducator) {
       var childrenofEducatorLocalStorage;
       if (!localStorage["childrenofEducatorLocalStorage"])
         childrenofEducatorLocalStorage = [];
-      else localStorage.clear();
+      else localStorage.removeItem("childrenofEducatorLocalStorage");
       if (!(childrenofEducatorLocalStorage instanceof Array))
         childrenofEducatorLocalStorage = [];
       childrenofEducatorLocalStorage.push(childrenEndroledforEducator);
@@ -126,17 +167,118 @@ function retrieveChildrensFromLocalStore() {
   }
 }
 
+// this method store the daily reflections of the children in the localStroge
+function storeDailyReflections(dailyReflection) {
+  try {
+    /*
+    /* create if the loacal storage is not available in the local storage
+     */
+    if (localStorage) {
+      var childrenDailyReflectionsLocalStorage;
+      if (!localStorage["dailyReflectionsLocalStorage"])
+        childrenDailyReflectionsLocalStorage = [];
+      //else localStorage.removeItem("dailyReflectionsLocalStorage");
+      if (!(childrenDailyReflectionsLocalStorage instanceof Array))
+        childrenDailyReflectionsLocalStorage = [];
+      childrenDailyReflectionsLocalStorage.push(dailyReflection);
+      // create the childrenDailyReflectionsLocalStorage that contails the daily events of the child
+      localStorage.setItem(
+        "dailyReflectionsLocalStorage",
+        JSON.stringify(dailyReflection)
+      );
+    }
+  } catch (error) {
+    console.error(
+      "Error detected while the store data to the local storage" + error
+    );
+    alert(
+      "Unable to retrive details of the children, Please try again in moment. Sorry for the inconvininace"
+    );
+  }
+}
+
 // this is the document.ready fuction handeles the button click events
 $(document).ready(function () {
   fetchChildrenDetails();
+
+
+
   $("#btnContainer").on("click", "#childBtn", function () {
     $("body").pagecontainer("change", "#daily-reflections-page", {
       transition: "slide",
     });
+
     // read the data values in the data attritute to fetch the each child a auctaor list
     // this helps to populate the each child details for create each page for eachild each day
     var childId = $(this).attr("data-index-number");
     fetchChildrenDetailsById(childId);
+    var childJsonFromID = localStorage.getItem(childId);
+    var childJsonFromIDObj = JSON.parse(childJsonFromID);
+    var childls = childJsonFromIDObj.childId;
+    var checkinls = childJsonFromIDObj.checkin.checkin;
+  });
+
+  $("#slider-flip-checkin").on("change", function () {
+    const checkInTime = getTimestamp();
+
+    var childIdLocal = $("#slider-flip-checkin").attr("data-index-number");
+    // write the children array aray to localstorage "Reflection"
+
+    //read the localstorage and get the child detail if the child id in LS and var childIdLocal match then append the check in time
+
+    var childJsonFromID = localStorage.getItem(childIdLocal);
+    var childJsonFromIDObj = JSON.parse(childJsonFromID);
+    childJsonFromIDObj.reflectionid = `${childIdLocal}-${checkInTime}`;
+    childJsonFromIDObj.checkin.checkin = "yes";
+    childJsonFromIDObj.checkin.timestamp = checkInTime;
+    localStorage.setItem(childIdLocal, JSON.stringify(childJsonFromIDObj));
+    var checkinstate = childJsonFromIDObj.checkin.checkin;
+    var childls = childJsonFromIDObj.childId;
+    $(`.slider-flip-checkin[data-index-number='${childIdLocal}']`).attr("disabled", true);
+    $(`#check-in-time[data-index-number='${childIdLocal}']`).append(checkInTime);   
+
+    }
+    //console.log(childJsonFromIDObj);}
+  });
+
+  $("#slider-flip-b-first").on("change", function () {
+    var childIdLocal = $("#slider-flip-b-first").attr("data-index-number");
+    var childJsonFromID = localStorage.getItem(childIdLocal);
+    var childJsonFromIDObj = JSON.parse(childJsonFromID);
+    childJsonFromIDObj.breakfast = "yes";
+    localStorage.setItem(childIdLocal, JSON.stringify(childJsonFromIDObj));
+  });
+
+  $("#slider-flip-m-tea").on("change", function () {
+    var childIdLocal = $("#slider-flip-b-first").attr("data-index-number");
+    var childJsonFromID = localStorage.getItem(childIdLocal);
+    var childJsonFromIDObj = JSON.parse(childJsonFromID);
+    childJsonFromIDObj.morningTea = "yes";
+    localStorage.setItem(childIdLocal, JSON.stringify(childJsonFromIDObj));
+  });
+
+  $("#slider-flip-lunch").on("change", function () {
+    var childIdLocal = $("#slider-flip-lunch").attr("data-index-number");
+    var childJsonFromID = localStorage.getItem(childIdLocal);
+    var childJsonFromIDObj = JSON.parse(childJsonFromID);
+    childJsonFromIDObj.lunch = "yes";
+    localStorage.setItem(childIdLocal, JSON.stringify(childJsonFromIDObj));
+  });
+
+  $("#slider-flip-snak").on("change", function () {
+    var childIdLocal = $("#slider-flip-snak").attr("data-index-number");
+    var childJsonFromID = localStorage.getItem(childIdLocal);
+    var childJsonFromIDObj = JSON.parse(childJsonFromID);
+    childJsonFromIDObj.snacks = "yes";
+    localStorage.setItem(childIdLocal, JSON.stringify(childJsonFromIDObj));
+  });
+
+  $("#slider-flip-checkout").on("change", function () {
+    var childIdLocal = $("#slider-flip-checkout").attr("data-index-number");
+    var childJsonFromID = localStorage.getItem(childIdLocal);
+    var childJsonFromIDObj = JSON.parse(childJsonFromID);
+    childJsonFromIDObj.snacks = "yes";
+    localStorage.setItem(childIdLocal, JSON.stringify(childJsonFromIDObj));
   });
 
   //this method used to encode the Base64 image file
@@ -182,20 +324,31 @@ $(document).ready(function () {
     },
   };
 
+  // this function provide the date time timestamp
+  function getTimestamp() {
+    const pad = (now, second = 2) =>
+      `${new Array(second).fill(0)}${now}`.slice(-second);
+    const date = new Date();
+
+    return `${pad(
+      date.getFullYear(),
+      4
+    )}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+  }
+
   // this fuction sends the image to the server as bas 64 encoded file
   function sendImagetoServer(imageURI) {
     var base64Img = imageURI;
     var image = new Image();
     image.src = "data:image/jpeg;base64," + base64Img;
     var childImageId = $("#child-images").attr("data-index-number");
-    var cemeraAttrbuteId = $("#camera-take-images").attr(
-      "data-index-number"
-    );
-    //add the Image preview to the report check the attrubute in the button and 
-    //div tages to match in order to avoid the images loaded in every child's reflection pages  
+    var cemeraAttrbuteId = $("#camera-take-images").attr("data-index-number");
+    //add the Image preview to the report check the attrubute in the button and
+    //div tages to match in order to avoid the images loaded in every child's reflection pages
     if (childImageId == cemeraAttrbuteId) {
       var img = document.createElement("img");
       img.src = "data:image/jpg;base64," + imageURI;
+      img.className = "child-image";
       document.getElementById("child-images").appendChild(img);
     }
 
