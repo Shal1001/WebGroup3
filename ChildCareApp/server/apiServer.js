@@ -109,7 +109,11 @@ app.post("/img", cors(), (req, res) => {
 	res.json({"imageurl": imgULI});
 })
 
+app.post("/dailyreflections", cors(), (req, res) => {
 
+	console.log(req.body);
+	
+})
 
 app.listen(port, baseURL, () => {
 	console.log(`Childcare app listening at http://localhost:${port}`)

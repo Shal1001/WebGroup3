@@ -62,28 +62,30 @@ function fetchChildrenDetailsById(ChildId) {
   ) {
     var childObj = childrenStorageDataArray[childernNo];
     prefillReflection(childObj);
+
     var childName = childObj.Name;
     var childid = childObj._id;
     var childRoom = childObj.Room;
+
     if (childid == ChildId) {
       $(".reflection-name").empty();
       $(".reflection-name").append(childName);
       $(".reflection-name").attr("data-index-number", childid);
       $(".reflection-room").empty();
       $(".reflection-room").append(childRoom);
+
       // add the data-index-number attribute that is used in the form through out
       $("#camera-take-images").attr("data-index-number", childid);
       $("#child-images").attr("data-index-number", childid);
-      $("#slider-flip-checkin").attr("data-index-number", childid);
-      $("#slider-flip-b-first").attr("data-index-number", childid);
-      $("#slider-flip-m-tea").attr("data-index-number", childid);
-      $("#slider-flip-lunch").attr("data-index-number", childid);
-      $("#slider-flip-snak").attr("data-index-number", childid);
-      $("#textarea_lerning_reflection").attr("data-index-number", childid);
-      $("#slider-flip-checkout").attr("data-index-number", childid);
       $("#save-button").attr("data-index-number", childid);
       $("#send-button").attr("data-index-number", childid);
       $("#check-in-time").attr("data-index-number", childid);
+
+      var childJsonFromID = localStorage.getItem(childid);
+      var childJsonFromIDObj = JSON.parse(childJsonFromID);
+      var reflectionMessage = childJsonFromIDObj.learningReflections;
+      $("#textarea_lerning_reflection").val("");
+      $("#textarea_lerning_reflection").val(reflectionMessage);
     }
   }
 }
@@ -110,8 +112,11 @@ function prefillReflection(childobj) {
       jsonRefelection.childRoom = refChildRoom;
       jsonRefelection.educator.name = refEducatorName;
       jsonRefelection.educator.username = refEducatorUserName;
+      jsonRefelection.reflectionid = `${childId}${new Date().getTime()}`
       // Reflection Id is generated when the child checked in the childid_timecheckin
-      localStorage.setItem(`${refchildId}`, JSON.stringify(jsonRefelection));
+      if (localStorage.getItem(`${refchildId}`) === null) {
+        localStorage.setItem(`${refchildId}`, JSON.stringify(jsonRefelection));
+      }
     }
   );
   console.log(childjson);
@@ -201,8 +206,6 @@ function storeDailyReflections(dailyReflection) {
 $(document).ready(function () {
   fetchChildrenDetails();
 
-
-
   $("#btnContainer").on("click", "#childBtn", function () {
     $("body").pagecontainer("change", "#daily-reflections-page", {
       transition: "slide",
@@ -212,74 +215,41 @@ $(document).ready(function () {
     // this helps to populate the each child details for create each page for eachild each day
     var childId = $(this).attr("data-index-number");
     fetchChildrenDetailsById(childId);
-    var childJsonFromID = localStorage.getItem(childId);
-    var childJsonFromIDObj = JSON.parse(childJsonFromID);
-    var childls = childJsonFromIDObj.childId;
-    var checkinls = childJsonFromIDObj.checkin.checkin;
   });
 
-  $("#slider-flip-checkin").on("change", function () {
-    const checkInTime = getTimestamp();
 
-    var childIdLocal = $("#slider-flip-checkin").attr("data-index-number");
-    // write the children array aray to localstorage "Reflection"
-
-    //read the localstorage and get the child detail if the child id in LS and var childIdLocal match then append the check in time
-
-    var childJsonFromID = localStorage.getItem(childIdLocal);
+  //Save the daily refelection of the child
+  $("#save-button").on("click", function () {
+    
+    var childIDsave = $("#save-button").attr("data-index-number");
+    var reflectionMessage = $("#textarea_lerning_reflection").val();
+    console.log(reflectionMessage);
+    var childJsonFromID = localStorage.getItem(childIDsave);
     var childJsonFromIDObj = JSON.parse(childJsonFromID);
-    childJsonFromIDObj.reflectionid = `${childIdLocal}-${checkInTime}`;
-    childJsonFromIDObj.checkin.checkin = "yes";
-    childJsonFromIDObj.checkin.timestamp = checkInTime;
-    localStorage.setItem(childIdLocal, JSON.stringify(childJsonFromIDObj));
-    var checkinstate = childJsonFromIDObj.checkin.checkin;
-    var childls = childJsonFromIDObj.childId;
-    $(`.slider-flip-checkin[data-index-number='${childIdLocal}']`).attr("disabled", true);
-    $(`#check-in-time[data-index-number='${childIdLocal}']`).append(checkInTime);   
+    childJsonFromIDObj.learningReflections = reflectionMessage;
+    localStorage.setItem(childIDsave, JSON.stringify(childJsonFromIDObj));
 
+    // Alter the text with the stored text
+    var lerningReflectionMessage = childJsonFromIDObj.learningReflections;
+    if (
+      $("textarea_lerning_reflection").attr("data-index-number") == childIDsave
+    ) {
+      $("#textarea_lerning_reflection").val("");
+      $("#textarea_lerning_reflection").val(lerningReflectionMessage);
     }
-    //console.log(childJsonFromIDObj);}
   });
 
-  $("#slider-flip-b-first").on("change", function () {
-    var childIdLocal = $("#slider-flip-b-first").attr("data-index-number");
-    var childJsonFromID = localStorage.getItem(childIdLocal);
+
+  //Save the daily refelection of the child
+  $("#send-button").on("click", function () {
+    
+    var childIDsave = $("#send-button").attr("data-index-number");
+    
+    var childJsonFromID = localStorage.getItem(childIDsave);
     var childJsonFromIDObj = JSON.parse(childJsonFromID);
-    childJsonFromIDObj.breakfast = "yes";
-    localStorage.setItem(childIdLocal, JSON.stringify(childJsonFromIDObj));
+    
   });
 
-  $("#slider-flip-m-tea").on("change", function () {
-    var childIdLocal = $("#slider-flip-b-first").attr("data-index-number");
-    var childJsonFromID = localStorage.getItem(childIdLocal);
-    var childJsonFromIDObj = JSON.parse(childJsonFromID);
-    childJsonFromIDObj.morningTea = "yes";
-    localStorage.setItem(childIdLocal, JSON.stringify(childJsonFromIDObj));
-  });
-
-  $("#slider-flip-lunch").on("change", function () {
-    var childIdLocal = $("#slider-flip-lunch").attr("data-index-number");
-    var childJsonFromID = localStorage.getItem(childIdLocal);
-    var childJsonFromIDObj = JSON.parse(childJsonFromID);
-    childJsonFromIDObj.lunch = "yes";
-    localStorage.setItem(childIdLocal, JSON.stringify(childJsonFromIDObj));
-  });
-
-  $("#slider-flip-snak").on("change", function () {
-    var childIdLocal = $("#slider-flip-snak").attr("data-index-number");
-    var childJsonFromID = localStorage.getItem(childIdLocal);
-    var childJsonFromIDObj = JSON.parse(childJsonFromID);
-    childJsonFromIDObj.snacks = "yes";
-    localStorage.setItem(childIdLocal, JSON.stringify(childJsonFromIDObj));
-  });
-
-  $("#slider-flip-checkout").on("change", function () {
-    var childIdLocal = $("#slider-flip-checkout").attr("data-index-number");
-    var childJsonFromID = localStorage.getItem(childIdLocal);
-    var childJsonFromIDObj = JSON.parse(childJsonFromID);
-    childJsonFromIDObj.snacks = "yes";
-    localStorage.setItem(childIdLocal, JSON.stringify(childJsonFromIDObj));
-  });
 
   //this method used to encode the Base64 image file
   function encodeBase64(image) {
@@ -338,6 +308,7 @@ $(document).ready(function () {
 
   // this fuction sends the image to the server as bas 64 encoded file
   function sendImagetoServer(imageURI) {
+    // console.log(childIDcamera);
     var base64Img = imageURI;
     var image = new Image();
     image.src = "data:image/jpeg;base64," + base64Img;
@@ -373,7 +344,13 @@ $(document).ready(function () {
     // the file is storted succfully it returens the link of the image from the server
     $.ajax(settings).done(function (response) {
       console.log(response.imageurl);
+      var childIDcamera = $("#camera-take-images").attr("data-index-number");
+      var childJsonFromID = localStorage.getItem(childIDcamera);
+      var childJsonFromIDObj = JSON.parse(childJsonFromID);
+
       var imageLink = response.imageurl;
+      childJsonFromIDObj.pictures.push(imageLink);
+      localStorage.setItem(childIDcamera, JSON.stringify(childJsonFromIDObj));
     });
   }
 

@@ -11,18 +11,6 @@
       "username": "",
       "name": ""
     },
-    "checkin": {
-        "checkin" : "no",
-        "timestamp" : ""
-    },
-    "breakfast" : "no",
-    "morningTea" : "no",
-    "lunch" : "no",
-    "snacks" : "no",
     "learningReflections" : "",
-    "pictures" : [],
-    "checkout": {
-        "checkout" : "no",
-        "timestamp" : ""
-    }
+    "pictures" : []
   }
