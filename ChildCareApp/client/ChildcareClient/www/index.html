@@ -1,150 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/index.css" />
+  </head>
+  <body>
+    <form action="http://localhost:9000/login" method="post">
+      <div class="container">
+        <label for="uname"><b>Username</b></label>
+        <input
+          type="text"
+          placeholder="Enter Username"
+          id="uname"
+          name="uname"
+          required
+        />
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Security-Policy"
-        content="default-src *; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src * 'self' data:">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="msapplication-tap-highlight" content="no">
-    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
-    <meta name="color-scheme" content="light dark">
-    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.css">
-    <link rel="stylesheet" href="css/index.css">
-    <script src="js/jqueryForMobile.js"></script>
-    <script src="js/jquery.mobile-1.4.5.js"></script>
-    <script src="node_modules/image-to-base64/image-to-base64.min.js"></script>
-    <title>Home</title>
-</head>
+        <label for="psw"><b>Password</b></label>
+        <input
+          type="password"
+          placeholder="Enter Password"
+          name="psw"
+          id="psw"
+          required
+        />
+        <button type="submit">Login</button>
+      </div>
+    </form>
+    <script src="../node_modules/cordova-browser/cordova-lib/cordova.js"></script>
 
-<body>
-    <!-- /page --------------------------------------------------------->
-    <div data-role="page" id="home">
-        <div data-role="header">
-            <h1 class="header-heading">Childcare - Educator</h1>
-            <div>
-                <div class="ui-btn-right">
-                    <p class="username-lable">Admin</p>
-                    <p class="user-lable">Admin</p>
-                </div>
-            </div>
-        </div><!-- /header -->
-        <div class="btnContainer" id="btnContainer">
+    <script src="js/jQuery.js"></script>
+    <script>
+      $(document).ready(function () {
+        $('form').submit(function (event) {
+          var formData = {
+            uname: $('#uname').val(),
+            psw: $('#psw').val(),
+          };
+          var Success = false;
 
-        </div>
-    </div><!-- /content -->
-
-    <div data-role="footer">
-        <h4>Page Footer</h4>
-    </div><!-- /footer -->
-    </div>
-    <!-- /page --------------------------------------------------------->
-
-    <div data-role="page" id="daily-reflections-page">
-
-        <div data-role="header" data-add-back-btn="true">
-            <h1 class="header-heading">Daily Reflections</h1>
-        </div><!-- /header -->
-
-        <div data-role="content">
-            <div class="center-form">                
-                <div class="ui-grid-b ui-responsive">
-                        <div class="ui-block-c">
-                        <div class="ui-bar ui-bar-c lable-text">Child name</div>
-                    </div>
-                        <div class="ui-block-c">
-                        <div class="ui-bar ui-bar-c">
-                            <p class="reflection-name" id="reflection-name"></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui-grid-b ui-responsive">
-                        <div class="ui-block-c">
-                        <div class="ui-bar ui-bar-c lable-text">Room</div>
-                    </div>
-                        <div class="ui-block-c">
-                        <div class="ui-bar ui-bar-c">
-                            <p class="reflection-room"></p>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-            <div class="ui-grid-b ui-responsive">
-                    <div class="ui-block-c">
-                    <div class="ui-bar ui-bar-c lable-text">Learning Reflections</div>
-                </div>
-                    <div class="ui-block-c">
-                    <div class="ui-bar ui-bar-c"><textarea cols="40" rows="20" name="textarea" id="textarea_lerning_reflection"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-b ui-responsive">
-                    <div class="ui-block-c">
-                    <div class="ui-bar ui-bar-c lable-text">Pictures</div>
-                </div>
-                    <div class="ui-block-c">
-                    <div class="ui-bar ui-bar-c">
-                        <div id="child-images"></div>
-                        <button id="camera-take-images">Take Pictures</button>
-                    </div>
-                </div>
-            </div>
-            <div class="ui-grid-b ui-responsive">
-                    <div class="ui-block-c">
-                    <div class="ui-bar ui-bar-c lable-text">
-                    </div>
-                </div>
-                    <div class="ui-block-c">
-                    <div class="ui-bar ui-bar-c">
-                        <button id="save-button">Save</button>
-                        <button id="send-button">Send</button>
-                    </div>
-                </div>
-            </div>
-            </form>
-        </div>
-    </div>
-    </div>
-
-    </div><!-- /content -->
-
-    <div data-role="footer">
-        <h4>Page Footer</h4>
-    </div><!-- /footer -->
-    </div><!-- /page -->
-    <!-- /page --------------------------------------------------------->
-
-    <div data-role="page" id="dataCloud">
-
-        <div data-role="header" data-add-back-btn="true">
-            <h1>CLOUD DATA</h1>
-        </div><!-- /header -->
-        <div data-role="content">
-            <table id="album-tbl-cloud" class="table">
-                <thead id='album-tbl-thead'>
-                    <th>Cover</th>
-                    <th>Id</th>
-                    <th>Artist</th>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Review</th>
-                </thead>
-                <tbody id='album-tbl-body-cloud'>
-                    <!---->
-                </tbody>
-            </table>
-        </div>
-    </div><!-- /content -->
-
-    <div data-role="footer">
-        <h4>Group Brisbane</h4>
-    </div><!-- /footer -->
-    </div>
-    <!-- /page --------------------------------------------------------->
-    <script src="cordova.js"></script>
-
-    <script src="js/index.js"></script>
-</body>
-
+          $.ajax({
+            type: 'POST',
+            url: 'http://localhost:3000/login',
+            data: formData,
+            dataType: 'json',
+            async: false,
+            encode: true,
+            success: function (data) {
+              window.location.href = './dashboard.html';
+            },
+            error: function (textStatus, errorThrown) {
+              callbackfn('login failed');
+            },
+          });
+          function callbackfn(data) {
+            alert(data);
+          }
+          event.preventDefault();
+        });
+      });
+    </script>
+  </body>
 </html>
